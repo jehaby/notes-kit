@@ -1,0 +1,8 @@
+{:full-name "flexi/notes-kit"
+ :ns-name   "flexi.notes-kit"
+ :sanitized "flexi/notes_kit"
+ :name      "notes-kit"
+ :modules   {:root         "modules"
+             :repositories [{:url  "https://github.com/kit-clj/modules.git"
+                             :tag  "master"
+                             :name "kit-modules"}]}}
