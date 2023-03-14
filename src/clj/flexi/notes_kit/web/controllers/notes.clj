@@ -17,10 +17,20 @@
 
     [:div
      [:h3 "Team notes"]
-     (for [{:keys [name content]} @notes-db]
-       [:div
-        [:h4 name]
-        [:p content]])]
+     (if-let [notes (seq @notes-db)]
+
+       (for [{:keys [id name content]} notes
+             :let [uri (str "/notes/" id)]]
+         [:div
+          [:a {:href uri} "Edit"]
+          [:button
+           {:hx-delete uri
+            :hx-confirm "you sure?"}
+           "Delete"]
+          [:h4 name]
+          [:p content]])
+
+       [:div "no notes"])]
 
     [:div
      [:h3 "Create new note"]
@@ -75,6 +85,14 @@
                :content (get new-note "content")})))
     {:status 200
      :headers {"HX-Redirect" (str "/notes/" note-id)}}))
+
+(defn delete [req]
+  (let [note-id (-> req :path-params :id parse-uuid)]
+    (swap! notes-db
+           (fn [notes]
+             (remove #(= (:id %) note-id) notes)))
+    {:status 200
+     :headers {"HX-Refresh" "true"}}))
 
 (comment
   @notes-db

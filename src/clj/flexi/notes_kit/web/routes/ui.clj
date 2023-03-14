@@ -42,7 +42,8 @@
 
    ["/notes/:id"
     {:get notes.c/get-form
-     :put notes.c/put-update}]])
+     :put notes.c/put-update
+     :delete notes.c/delete}]])
 
 (def route-data
   {:muuntaja   formats/instance
