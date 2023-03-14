@@ -1,0 +1,10 @@
+;;; -*- mode: lisp-data; -*-
+((nil . ((cider-clojure-cli-aliases . ":dev:nrepl:cider")
+         (cider-preferred-build-tool . clojure-cli)
+
+         (sql-product . postgres)
+         (sql-postgres-login-params . nil)
+         (sql-connection-alist . ((lui-dev
+                                   (sql-product 'postgres)
+                                   (sql-database "postgresql://notes-kit:dev@localhost:5463/notes-kit"))))
+         )))
