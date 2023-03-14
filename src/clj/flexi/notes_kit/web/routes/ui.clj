@@ -41,7 +41,8 @@
     {:post notes.c/post-create}]
 
    ["/notes/:id"
-    {:get notes.c/get-form}]])
+    {:get notes.c/get-form
+     :put notes.c/put-update}]])
 
 (def route-data
   {:muuntaja   formats/instance

@@ -41,6 +41,7 @@
     (ppage
      (if name
        [:form
+        {:hx-put (str "/notes/" note-id)}
         [:input {:name "name"
                  :type :text
                  :value name}]
@@ -62,7 +63,18 @@
     {:status 200
      :headers {"HX-Redirect" (str "/notes/" new-id)}}))
 
-(defn put-update [req])
+(defn put-update [req]
+  (let [note-id (-> req :path-params :id parse-uuid)
+        new-note (:form-params req)]
+    (swap! notes-db
+           (fn [notes]
+             (conj
+              (remove #(= (:id %) note-id) notes)
+              {:id note-id
+               :name (get new-note "name")
+               :content (get new-note "content")})))
+    {:status 200
+     :headers {"HX-Redirect" (str "/notes/" note-id)}}))
 
 (comment
   @notes-db
