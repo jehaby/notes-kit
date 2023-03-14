@@ -4,6 +4,7 @@
    [flexi.notes-kit.web.middleware.formats :as formats]
    [flexi.notes-kit.web.routes.utils :as utils]
    [flexi.notes-kit.web.controllers.auth :as auth.c]
+   [flexi.notes-kit.web.controllers.notes :as notes.c]
    [flexi.notes-kit.web.htmx :refer [ui page] :as htmx]
    [integrant.core :as ig]
    [reitit.ring.middleware.muuntaja :as muuntaja]
@@ -31,7 +32,16 @@
 
    ["/auth/login"
     {:get auth.c/get-login-form
-     :post auth.c/post-login}]])
+     :post auth.c/post-login}]
+
+   ["/app"
+    {:get notes.c/get-list}]
+
+   ["/notes"
+    {:post notes.c/post-create}]
+
+   ["/notes/:id"
+    {:get notes.c/get-form}]])
 
 (def route-data
   {:muuntaja   formats/instance
