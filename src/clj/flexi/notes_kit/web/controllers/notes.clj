@@ -8,8 +8,8 @@
 (defonce notes-db
   (atom
    [{:id     note-id-1
-     :name    "test "
-     :content "testsetsekjrlskjdfl;sdjkf;sjkaf;ldfjksa;fkj"}]))
+     :name    "Our first note "
+     :content "htmx is pretty nice btw"}]))
 
 (defn get-list [req]
   (ppage
