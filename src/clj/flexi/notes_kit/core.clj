@@ -11,7 +11,8 @@
 
     ;; Routes
     [flexi.notes-kit.web.routes.api]
-    )
+    
+    [flexi.notes-kit.web.routes.ui])
   (:gen-class))
 
 ;; log uncaught exceptions in threads
