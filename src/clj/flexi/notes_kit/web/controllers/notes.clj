@@ -22,32 +22,34 @@
    [:div
 
     [:div
-     [:h3 "Team notes"]
+     [:h3.p-3.text-2xl "team notes"]
      (if-let [notes (seq @notes-db)]
 
-       (for [{:keys [id name content]} notes
-             :let [uri (str "/notes/" id)]]
-         [:div
-          [:a {:href uri} "Edit"]
-          [:button
-           {:hx-delete uri
-            :hx-confirm "you sure?"}
-           "Delete"]
-          [:h4 name]
-          [:p content]])
+       [:div.p-3.flex.flex-wrap.gap-3
+        (for [{:keys [id name content]} notes
+              :let [uri (str "/notes/" id)]]
+          [:div {:class "bg-slate-50 border-slate-300 rounded max-w-md"}
+           [:div.flex.gap-2.text-slate-600.mx-4.p-2
+            [:a.text-sm {:href uri} "edit"]
+            [:button.text-sm
+             {:hx-delete uri
+              :hx-confirm "you sure?"}
+             "delete"]]
+           [:h4.text-lg.mx-3 name]
+           [:p.mx-2 content]])]
 
        [:div "no notes"])]
 
     [:div
-     [:h3 "Create new note"]
-     [:form
+     [:h3.p-3.text-xl "create new note"]
+     [:form.px-3.flex.gap-3
       {:hx-post "/notes"}
-      [:input
+      [:input.border-slate-600.rounded.bg-slate-50.px-2
        {:name "name"
         :type "text"
-        :placeholder "Note name"}]
+        :placeholder "note name"}]
 
-      [:button "Create new note"]]]]))
+      [:button.btn "create"]]]]))
 
 (defn get-form [req]
   (let [note-id (-> req :path-params :id parse-uuid)
@@ -56,18 +58,24 @@
                                     first)]
     (ppage
      (if name
-       [:form
-        {:hx-put (str "/notes/" note-id)}
-        [:input {:name "name"
-                 :type :text
-                 :value name}]
+       [:div.p-3
+        [:h3.px-3.text-2xl "edit note"]
+        [:form.px-3
+         {:hx-put (str "/notes/" note-id)}
+         [:div.my-2
+          [:input.text-xl.text-slate-600.border-slate-600.rounded.bg-slate-50.px-2.py-1
+           {:name "name"
+            :type :text
+            :value name}]]
 
-        [:input {:name "content"
-                 :type :textfield
-                 :placeholder "note content"
-                 :value content}]
+         [:div.my-2
+          [:input.border-slate-600.text-slate-600.rounded.bg-slate-50.px-2.py-1
+           {:name "content"
+            :type :textfield
+            :placeholder "note content"
+            :value content}]]
 
-        [:button "update note"]]
+         [:button.btn "update note"]]]
 
        [:div "note not found"]))))
 
